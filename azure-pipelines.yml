@@ -6,9 +6,6 @@
 trigger:
 - master
 
-pool:
-  vmImage: "ubuntu-16.04"
-
 steps:
 strategy:
   matrix:
@@ -22,3 +19,10 @@ strategy:
 
 pool:
   vmImage: $(imageName)
+  
+  - task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: "JaCoCo"
+    summaryFileLocation: "$(System.DefaultWorkingDirectory)/**/site/jacoco/jacoco.xml"
+    reportDirectory: "$(System.DefaultWorkingDirectory)/**/site/jacoco"
+    failIfCoverageEmpty: true
